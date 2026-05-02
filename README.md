@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌭 Panchomania
 
-## Getting Started
+> El concurso de panchos más épico de internet.
 
-First, run the development server:
+Aplicación web en tiempo real para organizar concursos de quien come más panchos en un tiempo determinado. Creá una sala, invitá a tus amigos y que gane el mejor.
+
+**[→ panchomania.vercel.app](https://panchomania.vercel.app)**
+
+---
+
+## ¿Cómo funciona?
+
+1. **Registrate** con un apodo y foto de perfil
+2. **Creá una arena** — poné nombre y cuánto tiempo dura el concurso
+3. **Compartí el link** o esperá que se sumen desde el listado público
+4. **Comenzá** cuando estén todos listos
+5. Durante el concurso, cada participante **suma o resta panchos** desde su pantalla
+6. Al terminar el tiempo, aparece el **podio** con el top 3 y los resultados finales
+
+---
+
+## Features
+
+- **Tiempo real** — el ranking se actualiza en vivo para todos los participantes usando Supabase Realtime
+- **Responsive** — funciona en portrait y landscape, pensado para usar desde el celular mientras comés
+- **Salas públicas** — las arenas aparecen en el listado principal y también se pueden compartir por link
+- **Podio animado** — el top 3 se muestra con animaciones en el resultado final
+- **Historial** — cada usuario tiene un registro de sus concursos pasados con posición y panchos comidos
+- **Tiebreaking justo** — si dos personas tienen el mismo conteo, gana quien llegó a ese número primero
+
+---
+
+## Stack
+
+| Tecnología | Uso |
+|---|---|
+| Next.js 16 (App Router) | Framework |
+| TypeScript | Tipado |
+| Tailwind CSS v4 | Estilos |
+| Framer Motion | Animaciones |
+| Supabase | Auth, base de datos, realtime, storage |
+| Vercel | Deploy |
+
+---
+
+## Correr localmente
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clonar
+git clone https://github.com/Pyrux-Labs/panchomania
+cd panchomania
+
+# Instalar dependencias
+pnpm install
+
+# Variables de entorno
+cp .env.example .env.local
+# Completar con las keys de tu proyecto Supabase
+
+# Dev server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Variables de entorno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu_anon_key
+SUPABASE_SERVICE_ROLE_KEY=tu_service_role_key
+```
 
-## Learn More
+### Base de datos
 
-To learn more about Next.js, take a look at the following resources:
+El schema completo está en `CLAUDE.md`. Las tablas necesarias son `profiles`, `rooms` y `room_participants`. Realtime tiene que estar habilitado en esas dos últimas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Estructura del proyecto
 
-## Deploy on Vercel
+```
+app/
+├── page.tsx              # Home — listado de salas
+├── login/                # Auth
+├── register/
+├── profile/              # Editar perfil y foto
+├── history/              # Historial de concursos
+└── rooms/
+    ├── create/           # Crear sala
+    └── [id]/             # Sala (lobby → concurso → resultados)
+        ├── RoomClient    # Suscripción realtime
+        ├── RoomLobby     # Esperando participantes
+        ├── RoomContest   # Concurso activo
+        └── RoomResults   # Podio y resultados
+components/
+├── Navbar.tsx
+├── Footer.tsx
+└── RoomList.tsx
+lib/
+├── actions.ts            # Server actions (startRoom, finishRoom, joinRoom)
+└── supabase/             # Cliente, server y tipos
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Hecho por
+
+**[Pyrux](https://www.pyrux.com.ar)** — estudio de desarrollo web, Rosario, Argentina.
