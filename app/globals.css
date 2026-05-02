@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #0a0604;
+  --background-2: #120d0a;
+  --background-3: #1a130f;
+  --foreground: #fef7f0;
+  --foreground-muted: #c9b5a0;
+  --coral: #ff7b3d;
+  --coral-mid: #e8641f;
+  --coral-dark: #a84510;
+  --gold: #d4a574;
+  --border: rgba(255, 123, 61, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --glass: rgba(26, 19, 15, 0.7);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-background-2: var(--background-2);
+  --color-background-3: var(--background-3);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-coral: var(--coral);
+  --color-coral-mid: var(--coral-mid);
+  --color-coral-dark: var(--coral-dark);
+  --color-gold: var(--gold);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--coral-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--coral-mid);
+}
+
+/* Arena glow effect for important elements */
+.arena-glow {
+  box-shadow: 0 0 20px rgba(255, 123, 61, 0.2), 0 0 60px rgba(255, 123, 61, 0.05);
+}
+
+.glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
